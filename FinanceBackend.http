@@ -1,0 +1,46 @@
+@FinanceBackend_HostAddress = https://localhost:7178
+
+
+
+@symbol=AAPL
+GET {{FinanceBackend_HostAddress}}/finance/StockPrice?symbol={{symbol}}
+
+###
+
+@offset=0
+GET {{FinanceBackend_HostAddress}}/finance/Symbols
+
+###
+
+GET {{FinanceBackend_HostAddress}}/finance/MarketNews
+
+###
+
+GET {{FinanceBackend_HostAddress}}/finance/CompanyNews?symbol={{symbol}}
+
+###
+
+GET {{FinanceBackend_HostAddress}}/finance/StockMetric?symbol={{symbol}}
+
+###
+
+GET {{FinanceBackend_HostAddress}}/finance/Symbols
+
+###
+
+POST {{FinanceBackend_HostAddress}}/user/favorites
+
+###
+
+POST {{FinanceBackend_HostAddress}}/user/favorites
+Content-Type: application/json
+
+{
+  //UserFavorites
+}
+
+###
+
+DELETE {{FinanceBackend_HostAddress}}/user/favorites?symbol={{symbol}}
+
+###
