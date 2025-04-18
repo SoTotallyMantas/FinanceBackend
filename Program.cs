@@ -18,7 +18,7 @@ namespace FinanceBackend
                 .AddClerkAuthentication( x =>
                 {
                     x.Authority = builder.Configuration["Clerk:Authority"]!;
-                   x.AuthorizedParty = builder.Configuration["Clerk:AuthorizedParty"]!;
+                    x.AuthorizedParty = builder.Configuration["Clerk:AuthorizedParty"]!;
                 });
             builder.Services.AddAuthorization();
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -30,14 +30,11 @@ namespace FinanceBackend
             builder.Services.AddScoped<IFavoriteService, FavoritesService>();
             builder.Services.AddCors(options =>
             {
-                options.AddDefaultPolicy(policy =>
+                options.AddPolicy("AllowAll", policy =>
                 {
-                    policy.WithOrigins("http://localhost:3000")
-                          .AllowAnyHeader()
-                          .AllowAnyMethod();
-                    policy.WithOrigins("https://localhost:3000")
-                          .AllowAnyHeader()
-                          .AllowAnyMethod();
+                    policy.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader();
                 });
             });
             builder.Services.AddOpenApi();
@@ -46,12 +43,13 @@ namespace FinanceBackend
 
             if (app.Environment.IsDevelopment())
             {
-                app.MapOpenApi();
+              
             }
+            app.MapOpenApi();
 
             app.UseHttpsRedirection();
-            app.UseCors();
-            
+            app.UseCors("AllowAll");
+
             app.UseAuthentication();
             app.UseAuthorization();
             app.RegisterFinancialDataEnpoints();
